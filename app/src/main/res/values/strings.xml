@@ -3,6 +3,10 @@
 
     <string name="app_name">BF Interpreter</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_run">Run</string>
+    <string name="output_help">Standard output:</string>
+    <string name="input_help">Standard input:</string>
+    <string name="code_help">Code:</string>
+    <string name="run_button">Run</string>
 
 </resources>

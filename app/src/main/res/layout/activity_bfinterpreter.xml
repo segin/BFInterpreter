@@ -2,26 +2,44 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/BFInterpreter">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/code_help"
+            android:id="@+id/codeHelp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/codeText"
+            android:layout_gravity="center_horizontal"
+            android:layout_toLeftOf="@+id/runButton"
+            android:layout_toStartOf="@+id/runButton"
+            android:layout_below="@+id/codeHelp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/run_button"
+            android:id="@+id/runButton"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/codeHelp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/codeText"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/input_help"
         android:id="@+id/inputHelp" />
 
     <EditText
@@ -35,12 +53,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="@string/output_help"
         android:id="@+id/outputHelp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="New Text"
         android:id="@+id/outputText" />
 </LinearLayout>
