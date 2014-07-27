@@ -8,39 +8,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/textView2" />
+        android:id="@+id/codeHelp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="91dp"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/codeText"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/textView3" />
+        android:id="@+id/inputHelp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="93dp"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/inputText"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/textView4" />
+        android:id="@+id/outputHelp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="New Text"
-        android:id="@+id/textView" />
+        android:id="@+id/outputText" />
 </LinearLayout>
