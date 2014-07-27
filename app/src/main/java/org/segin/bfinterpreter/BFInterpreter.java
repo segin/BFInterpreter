@@ -8,10 +8,14 @@ import android.view.MenuItem;
 
 public class BFInterpreter extends ActionBarActivity {
 
+    private Tape tape;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bfinterpreter);
+
+        tape = new Tape();
     }
 
 
@@ -28,7 +32,7 @@ public class BFInterpreter extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_run) {
             return true;
         }
         return super.onOptionsItemSelected(item);
