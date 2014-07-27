@@ -8,14 +8,14 @@ import android.view.MenuItem;
 
 public class BFInterpreter extends ActionBarActivity {
 
-    private Tape tape;
+    private Interpreter interpreter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bfinterpreter);
 
-        tape = new Tape();
+        interpreter = new Interpreter();
     }
 
 
