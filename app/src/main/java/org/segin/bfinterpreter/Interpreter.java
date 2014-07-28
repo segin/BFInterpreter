@@ -33,7 +33,7 @@ public class Interpreter {
     public void run(String code) {
         String ocode = optimize(code);
 
-        for (pc = 0; pc < code.length(); pc++) {
+        for (pc = 0; pc < ocode.length(); pc++)  {
             switch(ocode.charAt(pc)) {
                 case '>':
                     tape.forward();
@@ -57,7 +57,8 @@ public class Interpreter {
                     if (tape.get() == 0) {
                         int i = 1;
                         while (i > 0) {
-                            char c = ocode.charAt(++pc);
+                            ++pc;
+                            char c = ocode.charAt(pc);
                             if (c == '[')
                                 i++;
                             else if (c == ']')
@@ -66,10 +67,11 @@ public class Interpreter {
                     }
                     break;
                 case ']':
-                    if (tape.get() == 0) {
+                    if (tape.get() != 0) {
                         int i = 1;
                         while (i > 0) {
-                            char c = ocode.charAt(--pc);
+                            --pc;
+                            char c = ocode.charAt(pc);
                             if (c == '[')
                                 i--;
                             else if (c == ']')
@@ -82,7 +84,21 @@ public class Interpreter {
     }
 
     private String optimize(String code) {
-        return code;
+        String ocode = "";
+        for (pc = 0; pc < code.length(); pc++)
+            switch (code.charAt(pc)) {
+                case '>':
+                case '<':
+                case ',':
+                case '.':
+                case '+':
+                case '-':
+                case '[':
+                case ']':
+                    ocode += String.valueOf(code.charAt(pc));
+                    break;
+            }
+        return ocode;
     }
 
 
