@@ -4,10 +4,10 @@
     <string name="app_name">BF Interpreter</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_run">Run</string>
+    <string name="action_copy">Copy Output</string>
     <string name="output_help">Standard output:</string>
     <string name="input_help">Standard input:</string>
     <string name="code_help">Code:</string>
-    <string name="run_button">Run</string>
     <string name="code_text">,[&gt;,]&lt;[.&lt;]</string>
     <string name="input_text">This is the default stdin-text</string>
     <string name="crash">\n\n*** Program crashed with Exception:\ </string>
