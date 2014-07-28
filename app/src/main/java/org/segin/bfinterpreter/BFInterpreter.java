@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class BFInterpreter extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bfinterpreter);
+
 
         inputText = (EditText) findViewById(R.id.inputText);
         codeText = (EditText) findViewById(R.id.codeText);
@@ -76,12 +78,21 @@ public class BFInterpreter extends ActionBarActivity {
 
                 @Override
                 public void output(char out) {
+                    outputText.setVisibility(View.VISIBLE);
                     output += String.valueOf(out);
                     outputText.setText(output);
                 }
             });
+            try {
+                output = "";
                 inputCounter = 0;
                 interpreter.run(codeText.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                output += getString(R.string.crash) + e.toString();
+                outputText.setVisibility(View.VISIBLE);
+                outputText.setText(output);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
