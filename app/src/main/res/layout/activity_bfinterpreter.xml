@@ -5,47 +5,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/BFInterpreter">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/code_help"
+        android:id="@+id/codeHelp"
+        android:labelFor="@+id/codeText"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/code_help"
-            android:id="@+id/codeHelp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="91dp"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/codeText"
-            android:layout_gravity="center_horizontal"
-            android:layout_toLeftOf="@+id/runButton"
-            android:layout_toStartOf="@+id/runButton"
-            android:layout_below="@+id/codeHelp"
-            android:text="@string/code_text" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/run_button"
-            android:id="@+id/runButton"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/codeText"
+        android:layout_gravity="center_horizontal"
+        android:layout_toLeftOf="@+id/runButton"
+        android:layout_toStartOf="@+id/runButton"
+        android:layout_below="@+id/codeHelp"
+        android:text="@string/code_text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/input_help"
-        android:id="@+id/inputHelp" />
+        android:id="@+id/inputHelp"
+        android:labelFor="@+id/inputText" />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="93dp"
+        android:layout_height="90dp"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/inputText"
@@ -56,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/output_help"
-        android:id="@+id/outputHelp" />
+        android:id="@+id/outputHelp"
+        android:labelFor="@+id/outputText" />
 
     <TextView
         android:layout_width="match_parent"
