@@ -26,31 +26,9 @@ public class BFInterpreter extends ActionBarActivity {
         codeText = (EditText) findViewById(R.id.codeText);
         outputText = (TextView) findViewById(R.id.outputText);
 
-        interpreter = new Interpreter();
-        interpreter.setIO(new UserIO() {
-            @Override
-            public char input() {
-                try {
-                    return inputText.getText().toString().charAt(inputCounter++);
-                } catch (Exception e) {
-                    // Panu Kalliokoski behavior
-                    return 0;
-                }
-            }
-
-            @Override
-            public void output(char out) {
-                output += new StringBuilder().append(out).toString();
-                outputText.setText(output);
-            }
-        });
-        setupButton();
+        output = "";
+        inputCounter = 0;
     }
-
-    private void setupButton() {
-
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +44,28 @@ public class BFInterpreter extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_run) {
+            interpreter = new Interpreter();
+            interpreter.setIO(new UserIO() {
+                @Override
+                public char input() {
+                    try {
+                        char ret = inputText.getText().toString().charAt(inputCounter);
+                        inputCounter++;
+                        return ret;
+                    } catch (Exception e) {
+                        // Panu Kalliokoski behavior
+                        return 0;
+                    }
+                }
+
+                @Override
+                public void output(char out) {
+                    output += new StringBuilder().append(out).toString();
+                    outputText.setText(output);
+                }
+            });
+                inputCounter = 0;
+                interpreter.run(codeText.getText().toString());
             return true;
         }
         return super.onOptionsItemSelected(item);
