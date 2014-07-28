@@ -42,10 +42,10 @@ public class Tape {
     }
 
     public void dec() {
-        if (tape[position] == 0) {
+        if (tape[position] <= 0) {
             tape[position] = 255;
         } else {
-            tape[position]++;
+            tape[position]--;
         }
     }
 
@@ -61,7 +61,7 @@ public class Tape {
         if (position <= 0) {
             position = 65535;
         } else {
-            position++;
+            position--;
         }
     }
 }
