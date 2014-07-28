@@ -19,7 +19,7 @@ public class Interpreter {
     }
 
     public void run(String code) {
-        // ...
+        String ocode = optimize(code);
 
         for (pc = 0; pc < code.length(); pc++) {
             switch(code.charAt(pc)) {
@@ -70,7 +70,7 @@ public class Interpreter {
     }
 
     private String optimize(String code) {
-        // ...
+        return code;
     }
 
 
