@@ -22,7 +22,7 @@ public class Interpreter {
         String ocode = optimize(code);
 
         for (pc = 0; pc < code.length(); pc++) {
-            switch(code.charAt(pc)) {
+            switch(ocode.charAt(pc)) {
                 case '>':
                     tape.forward();
                     break;
@@ -35,17 +35,17 @@ public class Interpreter {
                 case '-':
                     tape.dec();
                     break;
-                case '.':
+                case ',':
                     tape.set(io.input());
                     break;
-                case ',':
+                case '.':
                     io.output(tape.get());
                     break;
                 case '[':
                     if (tape.get() == 0) {
                         int i = 1;
                         while (i > 0) {
-                            char c = code.charAt(++pc);
+                            char c = ocode.charAt(++pc);
                             if (c == '[')
                                 i++;
                             else if (c == ']')
@@ -57,7 +57,7 @@ public class Interpreter {
                     if (tape.get() == 0) {
                         int i = 1;
                         while (i > 0) {
-                            char c = code.charAt(--pc);
+                            char c = ocode.charAt(--pc);
                             if (c == '[')
                                 i--;
                             else if (c == ']')
