@@ -24,7 +24,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_toLeftOf="@+id/runButton"
             android:layout_toStartOf="@+id/runButton"
-            android:layout_below="@+id/codeHelp" />
+            android:layout_below="@+id/codeHelp"
+            android:text="@string/code_text" />
 
         <Button
             android:layout_width="wrap_content"
@@ -48,7 +49,8 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/inputText"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:text="@string/input_text" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -8,5 +8,7 @@
     <string name="input_help">Standard input:</string>
     <string name="code_help">Code:</string>
     <string name="run_button">Run</string>
+    <string name="code_text">,[&gt;,]&lt;[.&lt;]</string>
+    <string name="input_text">This is the default stdin-text</string>
 
 </resources>
