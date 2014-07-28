@@ -4,18 +4,51 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class BFInterpreter extends ActionBarActivity {
 
     private Interpreter interpreter;
+    private int inputCounter;
+    private EditText inputText;
+    private EditText codeText;
+    private TextView outputText;
+    private String output;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bfinterpreter);
 
+        inputText = (EditText) findViewById(R.id.inputText);
+        codeText = (EditText) findViewById(R.id.codeText);
+        outputText = (TextView) findViewById(R.id.outputText);
+
         interpreter = new Interpreter();
+        interpreter.setIO(new UserIO() {
+            @Override
+            public char input() {
+                try {
+                    return inputText.getText().toString().charAt(inputCounter++);
+                } catch (Exception e) {
+                    // Panu Kalliokoski behavior
+                    return 0;
+                }
+            }
+
+            @Override
+            public void output(char out) {
+                output += new StringBuilder().append(out).toString();
+                outputText.setText(output);
+            }
+        });
+        setupButton();
+    }
+
+    private void setupButton() {
+
     }
 
 
