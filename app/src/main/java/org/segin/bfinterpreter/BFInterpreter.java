@@ -16,6 +16,7 @@ package org.segin.bfinterpreter;
  * limitations under the License.
  */
 
+import android.text.ClipboardManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class BFInterpreter extends ActionBarActivity {
@@ -94,6 +96,13 @@ public class BFInterpreter extends ActionBarActivity {
                 outputText.setText(output);
             }
             return true;
+        }
+
+        if (id == R.id.action_copy) {
+            ClipboardManager clipboard = (ClipboardManager)
+                getSystemService(this.CLIPBOARD_SERVICE);
+            clipboard.setText(output);
+            Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

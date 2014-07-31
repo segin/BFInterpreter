@@ -11,5 +11,6 @@
     <string name="code_text">,[&gt;,]&lt;[.&lt;]</string>
     <string name="input_text">This is the default stdin-text</string>
     <string name="crash">\n\n*** Program crashed with Exception:\ </string>
+    <string name="copied">Output copied to clipboard!</string>
 
 </resources>
