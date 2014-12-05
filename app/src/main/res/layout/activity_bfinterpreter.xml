@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:text="@string/code_help"
             android:id="@+id/codeHelp"
-            android:labelFor="@+id/codeText"/>
+            android:labelFor="@+id/codeText"
+            android:textStyle="italic" />
 
         <EditText
             android:layout_width="match_parent"
@@ -35,6 +36,7 @@
             android:layout_toLeftOf="@+id/runButton"
             android:layout_toStartOf="@+id/runButton"
             android:layout_below="@+id/codeHelp"
+            android:fontFamily="monospace"
             android:text="@string/code_text"
             android:typeface="monospace" />
 
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:text="@string/input_help"
             android:id="@+id/inputHelp"
-            android:labelFor="@+id/inputText" />
+            android:labelFor="@+id/inputText"
+            android:textStyle="italic" />
 
         <EditText
             android:layout_width="match_parent"
@@ -59,12 +62,15 @@
             android:layout_height="wrap_content"
             android:text="@string/output_help"
             android:id="@+id/outputHelp"
-            android:labelFor="@+id/outputText" />
+            android:labelFor="@+id/outputText"
+            android:textStyle="italic" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/outputText" />
+            android:id="@+id/outputText"
+            android:fontFamily="monospace"
+            android:typeface="monospace" />
 
     </LinearLayout>
 
