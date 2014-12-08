@@ -19,9 +19,12 @@ package org.segin.bfinterpreter;
 public class Tape {
     private char[] tape;
     private int position;
+    
+    /* You may change this to implement larger tapes. */
+    const static int size = 0x10000;
 
     public Tape() {
-        tape = new char[0x10000];
+        tape = new char[size];
         position = 0;
     }
 
@@ -50,7 +53,7 @@ public class Tape {
     }
 
     public void forward() {
-        if (position >= 65535) {
+        if (position >= (size - 1)) {
             position = 0;
         } else {
             position++;
@@ -59,7 +62,7 @@ public class Tape {
 
     public void reverse() {
         if (position <= 0) {
-            position = 65535;
+            position = (size - 1);
         } else {
             position--;
         }
