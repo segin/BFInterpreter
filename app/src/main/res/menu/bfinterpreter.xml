@@ -7,11 +7,11 @@
         android:orderInCategory="100"
         android:alphabeticShortcut="r"
         android:icon="@android:drawable/ic_media_play"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|withText" />
     <item android:id="@+id/action_copy"
         android:title="@string/action_copy"
         android:orderInCategory="101"
         android:alphabeticShortcut="c"
         android:icon="@drawable/ic_menu_copy_holo_dark"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|withText" />
 </menu>
