@@ -21,7 +21,7 @@ public class Tape {
     private int position;
     
     /* You may change this to implement larger tapes. */
-    const static int size = 0x10000;
+    final static int size = 0x10000;
 
     public Tape() {
         tape = new char[size];
