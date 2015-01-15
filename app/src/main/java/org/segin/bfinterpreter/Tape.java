@@ -19,12 +19,26 @@ package org.segin.bfinterpreter;
 public class Tape {
     private char[] tape;
     private int position;
-    
+
+    /* User-defined tape size */
+    private int usize;
+
     /* You may change this to implement larger tapes. */
     final static int size = 0x10000;
 
     public Tape() {
-        tape = new char[size];
+        usize = size;
+        initTape();
+    }
+
+    public Tape(int usize) {
+        if((this.usize = usize) == 0)
+            this.usize = size;
+        initTape();
+    }
+
+    private void initTape() {
+        tape = new char[usize];
         position = 0;
     }
 
@@ -53,7 +67,7 @@ public class Tape {
     }
 
     public void forward() {
-        if (position >= (size - 1)) {
+        if (position >= (usize - 1)) {
             position = 0;
         } else {
             position++;
@@ -62,7 +76,7 @@ public class Tape {
 
     public void reverse() {
         if (position <= 0) {
-            position = (size - 1);
+            position = (usize - 1);
         } else {
             position--;
         }
