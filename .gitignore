@@ -1,10 +1,5 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
 .DS_Store
 /build
-.idea/libraries/appcompat_v7_21_0_2.xml
-.idea/libraries/support_annotations_21_0_2.xml
-.idea/libraries/support_v4_21_0_2.xml
-.idea/misc.xml
-.idea/misc.xml
+/.idea/*
