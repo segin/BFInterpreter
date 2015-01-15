@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translation by Mattis Michel <sic_zer0@hotmail.com> -->
 <resources>
-    <string name="app_name" translatable="false">BF Interpreter</string>
     <string name="hello_world">Hallo wereld!</string>
     <string name="action_run">Uitvoeren</string>
     <string name="action_copy">Kopieer Invoer</string>
     <string name="output_help">Standaard uitvoer:</string>
     <string name="input_help">Standaard invoer:</string>
     <string name="code_help">Code:</string>
-    <string name="code_text" translatable="false">,[&gt;,]&lt;[.&lt;]</string>
     <string name="input_text">Dit is de standaard stdin-tekst</string>
     <string name="crash">\n\n*** Programma gecrashed met Uitzondering:\ </string>
     <string name="copied">Uitvoer gekopieerd naar klembord!</string>
