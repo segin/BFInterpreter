@@ -8,6 +8,6 @@
     <string name="input_help">Standaard invoer:</string>
     <string name="code_help">Code:</string>
     <string name="input_text">Dit is de standaard stdin-tekst</string>
-    <string name="crash">\n\n*** Programma gecrashed met Uitzondering:\ </string>
+    <string name="crash">\n\n*** Programma gecrashed met Uitzondering:\n</string>
     <string name="copied">Uitvoer gekopieerd naar klembord!</string>
 </resources>
