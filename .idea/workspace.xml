@@ -7,7 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfec7966-43e3-47c3-8f26-f1769ca59b58" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BF Interpreter.iws" />
@@ -1296,7 +1295,11 @@
       <created>1430370500718</created>
       <updated>1430370500718</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Snapshot for 0.7.1">
+      <created>1430370619508</created>
+      <updated>1430370619508</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1378,7 +1381,8 @@
     <MESSAGE value="Update IDE files" />
     <MESSAGE value="Fixed Dutch translation." />
     <MESSAGE value="Enabled Apps2SD support." />
-    <option name="LAST_COMMIT_MESSAGE" value="Enabled Apps2SD support." />
+    <MESSAGE value="Snapshot for 0.7.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Snapshot for 0.7.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
