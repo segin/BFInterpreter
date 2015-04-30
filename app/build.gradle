@@ -8,8 +8,8 @@ android {
         applicationId "org.segin.bfinterpreter"
         minSdkVersion 7
         targetSdkVersion 21
-        versionCode 7
-        versionName "0.7"
+        versionCode 8
+        versionName "0.7.1"
     }
     buildTypes {
         release {
