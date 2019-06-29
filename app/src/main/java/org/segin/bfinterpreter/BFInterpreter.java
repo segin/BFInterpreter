@@ -18,7 +18,7 @@ package org.segin.bfinterpreter;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class BFInterpreter extends ActionBarActivity {
+public class BFInterpreter extends AppCompatActivity {
 
     private Interpreter interpreter;
     private int inputCounter;
