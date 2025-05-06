@@ -26,7 +26,7 @@ public class Interpreter {
         pc = 0;
     }
 
-    public void setIO (UserIO io) {
+    public void setIO(UserIO io) {
         this.io = io;
     }
 
