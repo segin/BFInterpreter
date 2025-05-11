@@ -2,21 +2,43 @@
 
 buildscript {
     repositories {
-        jcenter()
+        // google() repository should be listed first to ensure Android-specific artifacts are resolved from it.
         google()
+        // mavenCentral() is the replacement for jcenter(), which has been shut down.
+        mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        // Updated Android Gradle Plugin (AGP) version.
+        // Original version was 3.4.1.
+        // AGP 8.9.2 is compatible with Gradle 8.14 and requires JDK 17.
+        // Make sure your project's JDK is set to 17 or higher in Android Studio:
+        // File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK
+        // Or in your system environment variables if building from the command line.
+        classpath 'com.android.tools.build:gradle:8.9.2'
 
         // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // in the individual module build.gradle files.
+        // If you are using Kotlin, you might also need to add the Kotlin Gradle plugin here:
+        // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:<latest_kotlin_version>"
     }
 }
 
+// Configure repositories for all sub-projects.
+// The 'plugins' block is now the recommended way to apply plugins in module-level build.gradle files,
+// but for project-level repositories, 'allprojects' or 'subprojects' is still common.
+// However, with modern Gradle, repository configuration in settings.gradle.kts (or .gradle)
+// using dependencyResolutionManagement is preferred for centralized repository management.
 allprojects {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        // You might have other repositories here, e.g., for specific libraries.
+        // maven { url 'https://www.jitpack.io' }
     }
+}
+
+// It's good practice to define a task to clean the build directory.
+// This was often in the top-level build.gradle but can also be managed by Android Studio.
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
