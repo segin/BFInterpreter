@@ -4,12 +4,13 @@ android {
     namespace 'org.segin.bfinterpreter'
     compileSdkVersion 34
 
+
     defaultConfig {
         applicationId "org.segin.bfinterpreter"
         minSdkVersion 14
         targetSdkVersion 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 10
+        versionName "1.99"
     }
 
     buildTypes {
