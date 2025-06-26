@@ -84,22 +84,8 @@ public class Interpreter {
     }
 
     private String optimize(String code) {
-        String ocode = "";
-        for (pc = 0; pc < code.length(); pc++)
-            switch (code.charAt(pc)) {
-                case '>':
-                case '<':
-                case ',':
-                case '.':
-                case '+':
-                case '-':
-                case '[':
-                case ']':
-                    ocode += String.valueOf(code.charAt(pc));
-                    break;
-            }
-        return ocode;
+        // Removes any characters that are not valid Brainfuck commands.
+        // This is more efficient and concise than iterating and building a string.
+        return code.replaceAll("[^><,.+\\-\\[\\]]", "");
     }
-
-
 }

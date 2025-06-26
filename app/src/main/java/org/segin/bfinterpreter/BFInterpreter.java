@@ -18,8 +18,10 @@ package org.segin.bfinterpreter;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.ClipboardManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +38,6 @@ public class BFInterpreter extends AppCompatActivity {
     private EditText codeText;
     private TextView outputText;
     private String output;
-    private AsyncTask interpThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,105 +67,77 @@ public class BFInterpreter extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_run) {
-            interpreter = new Interpreter();
-            interpreter.setIO(new UserIO() {
-                @Override
-                public char input() {
-                    try {
-                        char ret = inputText.getText().toString().charAt(inputCounter);
-                        inputCounter++;
-                        return ret;
-                    } catch (Exception e) {
-                        // Panu Kalliokoski behavior
-                        return 0;
-                    }
-                }
-
-                @Override
-                public void output(char out) {
-                    outputText.setVisibility(View.VISIBLE);
-                    output += String.valueOf(out);
-                    outputText.setText(output);
-                }
-            });
-            try {
-                output = "";
-                inputCounter = 0;
-                interpreter.run(codeText.getText().toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-                output += getString(R.string.crash) + e.toString();
-                outputText.setVisibility(View.VISIBLE);
-                outputText.setText(output);
-            }
+            String code = codeText.getText().toString();
+            String input = inputText.getText().toString();
+            new InterpreterThread().execute(code, input);
             return true;
         }
 
         if (id == R.id.action_copy) {
-            ClipboardManager clipboard = (ClipboardManager)
-                getSystemService(this.CLIPBOARD_SERVICE);
-            clipboard.setText(output);
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("BF Output", output);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+            }
             Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    private class InterpreterThread extends AsyncTask<String, Integer, String> {
-
-        private int a;
+    private class InterpreterThread extends AsyncTask<String, Void, String> {
+        private String error = null;
 
         @Override
-        void onPreExecute() {
+        protected void onPreExecute() {
             super.onPreExecute();
             output = "";
+            outputText.setText("");
+            outputText.setVisibility(View.VISIBLE);
+            inputCounter = 0;
+            // Consider disabling the run button here to prevent multiple executions
         }
 
         @Override
         protected String doInBackground(String... params) {
+            final String code = params[0];
+            final String input = params[1];
+            final StringBuilder outputBuilder = new StringBuilder();
+
             interpreter = new Interpreter();
             interpreter.setIO(new UserIO() {
                 @Override
                 public char input() {
-                    try {
-                        char ret = inputText.getText().toString().charAt(inputCounter);
-                        inputCounter++;
-                        return ret;
-                    } catch (Exception e) {
-                        // Panu Kalliokoski behavior
-                        return 0;
+                    if (inputCounter < input.length()) {
+                        return input.charAt(inputCounter++);
                     }
+                    return 0; // End of input, Panu Kalliokoski behavior
                 }
 
                 @Override
                 public void output(char out) {
-                    outputText.setVisibility(View.VISIBLE);
-                    output += String.valueOf(out);
-                    outputText.setText(output);
+                    outputBuilder.append(out);
                 }
             });
+
             try {
-                output = "";
-                inputCounter = 0;
-                interpreter.run(codeText.getText().toString());
+                interpreter.run(code);
             } catch (Exception e) {
                 e.printStackTrace();
-                output += getString(R.string.crash) + e.toString();
-                outputText.setVisibility(View.VISIBLE);
-                outputText.setText(output);
+                error = e.toString();
             }
-            return true;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
+            return outputBuilder.toString();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            output = result;
+            if (error != null) {
+                // R.string.crash might not exist, using a hardcoded string for safety.
+                output += "\n" + "Error: " + error;
+            }
+            outputText.setText(output);
+            // Consider re-enabling the run button here
         }
     }
-    */
 }
