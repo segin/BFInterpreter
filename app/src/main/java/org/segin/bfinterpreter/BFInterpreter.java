@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,6 +71,16 @@ public class BFInterpreter extends AppCompatActivity {
             String code = codeText.getText().toString();
             String input = inputText.getText().toString();
             new InterpreterThread().execute(code, input);
+            return true;
+        }
+
+        if (id == R.id.action_debug) {
+            String code = codeText.getText().toString();
+            String input = inputText.getText().toString();
+            Intent intent = new Intent(this, DebuggerActivity.class);
+            intent.putExtra("CODE", code);
+            intent.putExtra("INPUT", input);
+            startActivity(intent);
             return true;
         }
 
