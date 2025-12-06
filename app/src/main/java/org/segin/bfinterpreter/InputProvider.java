@@ -16,7 +16,7 @@ package org.segin.bfinterpreter;
  * limitations under the License.
  */
 
-public interface UserIO {
-    char input();
-    void output(char out);
+public interface InputProvider {
+    char read() throws InterruptedException;
+    boolean hasInput();
 }

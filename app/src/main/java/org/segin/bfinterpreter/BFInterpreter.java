@@ -16,15 +16,16 @@ package org.segin.bfinterpreter;
  * limitations under the License.
  */
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,25 +33,41 @@ import android.widget.Toast;
 
 public class BFInterpreter extends AppCompatActivity {
 
-    private Interpreter interpreter;
-    private int inputCounter;
+    private BFViewModel viewModel;
     private EditText inputText;
     private EditText codeText;
     private TextView outputText;
-    private String output;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bfinterpreter);
 
-
         inputText = (EditText) findViewById(R.id.inputText);
         codeText = (EditText) findViewById(R.id.codeText);
         outputText = (TextView) findViewById(R.id.outputText);
 
-        output = "";
-        inputCounter = 0;
+        viewModel = new ViewModelProvider(this).get(BFViewModel.class);
+
+        // Bind output
+        viewModel.outputString.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                outputText.setText(s);
+            }
+        });
+
+        viewModel.state.observe(this, new Observer<InterpreterEngine.State>() {
+             @Override
+             public void onChanged(InterpreterEngine.State state) {
+                 if (state == InterpreterEngine.State.ERROR) {
+                     String err = viewModel.getEngine().getErrorMessage();
+                     if (err != null) {
+                        Toast.makeText(BFInterpreter.this, "Error: " + err, Toast.LENGTH_LONG).show();
+                     }
+                 }
+             }
+        });
     }
 
     @Override
@@ -69,75 +86,30 @@ public class BFInterpreter extends AppCompatActivity {
         if (id == R.id.action_run) {
             String code = codeText.getText().toString();
             String input = inputText.getText().toString();
-            new InterpreterThread().execute(code, input);
+            viewModel.load(code, false); // Legacy mode: non-interactive
+            if (!input.isEmpty()) viewModel.input(input);
+            viewModel.run();
+            return true;
+        }
+
+        if (id == R.id.action_debug) {
+            String code = codeText.getText().toString();
+            String input = inputText.getText().toString();
+            Intent intent = new Intent(this, DebuggerActivity.class);
+            intent.putExtra("CODE", code);
+            intent.putExtra("INPUT", input);
+            startActivity(intent);
             return true;
         }
 
         if (id == R.id.action_copy) {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("BF Output", output);
+            ClipData clip = ClipData.newPlainText("BF Output", outputText.getText().toString());
             if (clipboard != null) {
                 clipboard.setPrimaryClip(clip);
             }
             Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private class InterpreterThread extends AsyncTask<String, Void, String> {
-        private String error = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            output = "";
-            outputText.setText("");
-            outputText.setVisibility(View.VISIBLE);
-            inputCounter = 0;
-            // Consider disabling the run button here to prevent multiple executions
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            final String code = params[0];
-            final String input = params[1];
-            final StringBuilder outputBuilder = new StringBuilder();
-
-            interpreter = new Interpreter();
-            interpreter.setIO(new UserIO() {
-                @Override
-                public char input() {
-                    if (inputCounter < input.length()) {
-                        return input.charAt(inputCounter++);
-                    }
-                    return 0; // End of input, Panu Kalliokoski behavior
-                }
-
-                @Override
-                public void output(char out) {
-                    outputBuilder.append(out);
-                }
-            });
-
-            try {
-                interpreter.run(code);
-            } catch (Exception e) {
-                e.printStackTrace();
-                error = e.toString();
-            }
-            return outputBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            output = result;
-            if (error != null) {
-                // R.string.crash might not exist, using a hardcoded string for safety.
-                output += "\n" + "Error: " + error;
-            }
-            outputText.setText(output);
-            // Consider re-enabling the run button here
-        }
     }
 }

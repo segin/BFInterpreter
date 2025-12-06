@@ -17,6 +17,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DebuggerActivity"
+            android:label="Debugger"
+            android:parentActivityName=".BFInterpreter">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BFInterpreter" />
+        </activity>
     </application>
 
 </manifest>
