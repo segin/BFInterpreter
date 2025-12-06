@@ -1,5 +1,21 @@
 package org.segin.bfinterpreter;
 
+/*
+ * Copyright 2014 Kirn Gill II <segin2005@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -31,22 +47,32 @@ public class BFViewModel extends AndroidViewModel {
         updateLiveData();
     }
 
-    public void load(String code) {
-        engine.load(code);
-        outputBuffer.setLength(0);
-        outputString.postValue("");
+    public void load(final String code, final boolean interactive) {
+        pause(); // Ensure we stop previous run
 
+        // Initialize I/O immediately to avoid race condition with input()
         asyncInputProvider = new AsyncInputProvider();
-        engine.setIO(asyncInputProvider, new OutputConsumer() {
+        asyncInputProvider.setInteractive(interactive);
+
+        executor.submit(new Runnable() {
             @Override
-            public void print(char c) {
-                synchronized (outputBuffer) {
-                    outputBuffer.append(c);
-                }
-                outputString.postValue(outputBuffer.toString());
+            public void run() {
+                engine.load(code);
+                outputBuffer.setLength(0);
+                outputString.postValue("");
+
+                engine.setIO(asyncInputProvider, new OutputConsumer() {
+                    @Override
+                    public void print(char c) {
+                        synchronized (outputBuffer) {
+                            outputBuffer.append(c);
+                        }
+                        outputString.postValue(outputBuffer.toString());
+                    }
+                });
+                updateLiveData();
             }
         });
-        updateLiveData();
     }
 
     public void input(String s) {
@@ -85,6 +111,7 @@ public class BFViewModel extends AndroidViewModel {
                     }
                 } catch (InterruptedException e) {
                     // Stopped
+                    engine.pause();
                     Thread.currentThread().interrupt();
                 } finally {
                     updateLiveData();
@@ -117,10 +144,15 @@ public class BFViewModel extends AndroidViewModel {
 
     public void reset() {
         pause();
-        engine.reset();
-        outputBuffer.setLength(0);
-        outputString.postValue("");
-        updateLiveData();
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                engine.reset();
+                outputBuffer.setLength(0);
+                outputString.postValue("");
+                updateLiveData();
+            }
+        });
     }
 
     public void setMemory(final int address, final char value) {

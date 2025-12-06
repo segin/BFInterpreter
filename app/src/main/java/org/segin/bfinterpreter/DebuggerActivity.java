@@ -1,5 +1,21 @@
 package org.segin.bfinterpreter;
 
+/*
+ * Copyright 2014 Kirn Gill II <segin2005@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +64,7 @@ public class DebuggerActivity extends AppCompatActivity implements HexDumpAdapte
         // Init ViewModel
         viewModel = new ViewModelProvider(this).get(BFViewModel.class);
         if (savedInstanceState == null) {
-            viewModel.load(sourceCode);
+            viewModel.load(sourceCode, true); // Debugger: interactive
             if (inputData != null && !inputData.isEmpty()) {
                 viewModel.input(inputData);
             }
@@ -85,11 +101,11 @@ public class DebuggerActivity extends AppCompatActivity implements HexDumpAdapte
         viewModel.tape.observe(this, new Observer<Tape>() {
             @Override
             public void onChanged(Tape tape) {
-                // Update adapter's tape reference (or recreate if needed, simple recreation is safer for now if tape object changes)
-                // Since Tape is immutable size but mutable content, if object ref changes we need new adapter or update logic.
-                // Assuming tape ref changes on load/reset.
-                hexDumpAdapter = new HexDumpAdapter(tape, DebuggerActivity.this);
-                hexRecyclerView.swapAdapter(hexDumpAdapter, false);
+                // Optimize adapter update
+                if (hexDumpAdapter == null || hexDumpAdapter.getTape() != tape) {
+                    hexDumpAdapter = new HexDumpAdapter(tape, DebuggerActivity.this);
+                    hexRecyclerView.swapAdapter(hexDumpAdapter, false);
+                }
 
                 Integer ptr = viewModel.pointer.getValue();
                 if (ptr != null) hexDumpAdapter.updatePointer(ptr);

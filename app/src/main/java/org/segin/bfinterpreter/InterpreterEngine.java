@@ -1,5 +1,21 @@
 package org.segin.bfinterpreter;
 
+/*
+ * Copyright 2014 Kirn Gill II <segin2005@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -22,7 +38,7 @@ public class InterpreterEngine {
     private Tape tape;
     private final Map<Integer, Integer> jumpTable;
     private final Map<Integer, Integer> depthMap;
-    private State state;
+    private volatile State state;
     private InputProvider inputProvider;
     private OutputConsumer outputConsumer;
     private String errorMessage;
@@ -123,7 +139,7 @@ public class InterpreterEngine {
                         state = State.WAITING_FOR_INPUT;
                         char input = inputProvider.read(); // Blocks
                         state = State.RUNNING;
-                        tape.set(pointer, input);
+                        tape.set(pointer, (char)(input & 0xFF));
                     } else {
                          tape.set(pointer, (char)0); // EOF default
                     }
